@@ -1,0 +1,1125 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nevadainbre.github.io/unix_tutorial/2026-03/file_management/">
+      
+      
+        <link rel="prev" href="../advanced/">
+      
+      
+        <link rel="next" href="../text_processing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../images/university-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Intro & File Management - Nevada Bioinformatics Center - Unix Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#welcome-to-day-2-automation-scaling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Nevada Bioinformatics Center - Unix Workshop" class="md-header__button md-logo" aria-label="Nevada Bioinformatics Center - Unix Workshop" data-md-component="logo">
+      
+  <img src="../images/university-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nevada Bioinformatics Center - Unix Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Intro & File Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/NevadaINBRE/unix_tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NevadaINBRE/unix_tutorial
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Nevada Bioinformatics Center - Unix Workshop" class="md-nav__button md-logo" aria-label="Nevada Bioinformatics Center - Unix Workshop" data-md-component="logo">
+      
+  <img src="../images/university-logo.svg" alt="logo">
+
+    </a>
+    Nevada Bioinformatics Center - Unix Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/NevadaINBRE/unix_tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NevadaINBRE/unix_tutorial
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 1 - Beginner UNIX
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 1 - Beginner UNIX
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anatomy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigation & Pathing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Downloading & Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Tools & Wrap-up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 2 - Intermediate UNIX
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 2 - Intermediate UNIX
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro & File Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro & File Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#welcome-to-day-2-automation-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Welcome to Day 2: Automation &amp; Scaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-file-directory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced File &amp; Directory Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced File &amp; Directory Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batch-processing-working-with-multiple-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch processing &amp; working with multiple files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symbolic-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symbolic Links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disk-usage-analysis-du-df-and-ncdu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disk usage analysis: du, df, and ncdu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text_processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shell_scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shell Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote_computing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Computing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intermediate_wrapup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recap & Cheat Sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#welcome-to-day-2-automation-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Welcome to Day 2: Automation &amp; Scaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-file-directory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced File &amp; Directory Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced File &amp; Directory Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batch-processing-working-with-multiple-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch processing &amp; working with multiple files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symbolic-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symbolic Links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disk-usage-analysis-du-df-and-ncdu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disk usage analysis: du, df, and ncdu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Intro & File Management</h1>
+
+<h3 id="welcome-to-day-2-automation-scaling">Welcome to Day 2: Automation &amp; Scaling</h3>
+<p><img alt="" src="https://assets.techrepublic.com/uploads/2021/08/tux-new.jpg" /></p>
+<p>Welcome back! Previously, we established the foundational skills needed to navigate the command line, manage directories, and install software. Today, we are shifting our focus from <em>navigating</em> to <em>automating</em>. </p>
+<p>In modern research computing, especially when dealing with massive data outputs like high-throughput sequencing or complex array jobs, manually running commands one by one simply doesn't scale. The raw output of these experiments is usually in the form of large text files spread across complex directory structures. </p>
+<p>The true power of the Unix command line lies in its ability to string together small, highly optimized tools to do the heavy lifting for you. In this advanced session, you will learn how to:</p>
+<ul>
+<li><strong>Batch Process:</strong> Execute commands across thousands of files simultaneously.</li>
+<li><strong>Parse Text:</strong> Extract, filter, and compute data directly from large files without ever opening them.</li>
+<li><strong>Automate:</strong> Write reusable shell scripts so you never have to type the same complex command twice.</li>
+<li><strong>Compute Remotely:</strong> Securely transfer your data and keep your pipelines running on High-Performance Computing (HPC) clusters, even after you close your laptop. </li>
+</ul>
+<p>If you can master just a handful of these advanced commands, you will fundamentally change how quickly and efficiently you can process your research data. Let's dive in.</p>
+<h3 id="advanced-file-directory-management">Advanced File &amp; Directory Management</h3>
+<h4 id="batch-processing-working-with-multiple-files">Batch processing &amp; working with multiple files</h4>
+<p>Often times researchers have to deal with large datasets comprised of a lot of smaller individual files. Linux has some utilities to help work with multiple files in an automated fashion. The utilities we will be covering in this section are: <code>find</code>, <code>xargs</code>, <code>parallel</code>, for loops in BASH, symlinks/hardlinks, <code>du</code>, <code>df</code>, and <code>ncdu</code>.</p>
+<p>First, we need to download the example data to a folder for this training. Let's all create a <code>unix_adv_workshop</code> folder and transfer the example data into there. This dataset is a Bioinformatics dataset of gut microbiome sequencing. The data is compressed in .gz format.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>unix_adv_workshop
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>unix_adv_workshop
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>wget<span class="w"> </span>https://biox.unr.edu/ftp/workshop_data/testdata1.tar.gz
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>tar<span class="w"> </span>-xvzf<span class="w"> </span>testdata1.tar.gz
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">cd</span><span class="w"> </span>testdata1
+</code></pre></div>
+<p>Let's use the find command to find data files within this directory structure. We can use the find command with the <code>*</code> glob character in order to match anything that would replace the <code>*</code>.  We want to find all files that end with .gz, therefore, we would use <code>*.gz</code> in the find command.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>find<span class="w"> </span>.<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.gz&quot;</span>
+</code></pre></div>
+<p>Let's review the output for this command. You will notice it each line contains the location to one of the files that matches the *.gz pattern.  However, you may notice this data isn't organized very well.  Some of the sets have the data at the top directory, some have multiple layers of sub directories where the .gz files are located. Also, notice that some files end with .fastq.gz and others with .txt.gz.  </p>
+<p>Let's update the command to only operate on .fastq.gz files.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w">  </span><span class="s2">&quot;*.fastq.gz&quot;</span>
+</code></pre></div>
+<p>Review the output and ensure that only .fastq.gz files are printed.</p>
+<p>Now that we are finding our correct files, we want to get some preliminary Quality Control information about this data. We can have find run a utility for each file that gets returned.  In this case, we want to run ls for each file so that we can get the file sizes for the dataset. </p>
+<p>In order to do this, we will be adding the <code>--exec</code> flag which then executes the next command line utility listed with any parameters also. The file name <code>find</code> found will be replaced with the {} characters. Then the <code>\;</code> signifies to find that is the end of the command.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span>-exec<span class="w"> </span>ls<span class="w"> </span>-lh<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+</code></pre></div>
+<p>Great, we have a list of filesizes for everything! However, what if some of the files had different cases then what we wrote in the -name search?  Since UNIX is case sensitive, our find command would not find those files.  Instead, we can use the -iname option to use CASE INSENSITIVE search.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span>-exec<span class="w"> </span>ls<span class="w"> </span>-lh<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+</code></pre></div>
+<p>Now, let's try to get the number of lines in the file with the utility <code>wc -l</code>.  However, our data is compressed, so we would like to use two utilities in order to keep the data compressed but calculate the number of lines. <code>zcat</code> to uncompress the data on the fly then piped into <code>wc -l</code> to count the number of lines in the file. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span>--exec<span class="w"> </span>zcat<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="w"> </span><span class="se">\;</span>
+</code></pre></div>
+<p>You will notice this command doesn't work. Find can't work with pipes, but there is an alternative! We can use <code>xargs</code> or <code>parallel</code> to run these more complex commands after find.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span>-print0<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-0<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>parallel<span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+</code></pre></div>
+<p>Lets break down each of these commands:</p>
+<ul>
+<li>
+<p><strong><code>xargs</code>:</strong>
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>find<span class="w"> </span>.<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span>-print0<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-0<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+</code></pre></div>
+    A similar find command was used as in previous examples. <code>-print0</code> is added to allow find to pass filenames with spaces and special characters to the next command. <code>| xargs -0</code> pipes the results from find into the <code>xargs</code> program. <code>-0</code> allows <code>xargs</code> to read null-terminated filenames. <code>-I {}</code> replaces the <code>{}</code> characters with the filenames. <code>sh -c '...'</code> runs the <code>sh</code> shell to execute the command following <code>-c</code>. </p>
+</li>
+<li>
+<p><strong><code>parallel</code>:</strong>
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>find<span class="w"> </span>.<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>parallel<span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+</code></pre></div>
+    A similar find command was used as in previous examples. Notice there is less syntax than the <code>xargs</code> example above. This takes the results from the <code>find</code> command, pipes it, and then runs <code>parallel</code> to execute the command within the single quotes.</p>
+</li>
+</ul>
+<p>Parallel was designed after xargs to fix some of it's limitations. Therefore, to parallelize commands, I suggest using parallel which we will be going over more options next.</p>
+<p>You will notice in the previous two executions, <code>xargs</code> took a while to run, where as the <code>parallel</code> command ran much quicker. This is because by default, <code>parallel</code> uses all CPU cores on a system. In contrast, <code>xargs</code> defaults to only using 1 core.  You can customize these options with the following commands.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span>-print0<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-0<span class="w"> </span>-P<span class="w"> </span><span class="m">2</span><span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>parallel<span class="w"> </span>-j<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+</code></pre></div>
+<p>For <code>xargs</code>, the <code>-P 2</code> tells it to use 4 cores for processing. Likewise for <code>paralel</code>, the <code>-j 2</code> tells it to use 4 cores for processing. However, carefully look at how the data gets printed to the screen for each execution. Notice how the <code>xargs</code> command prints the echo text right away before including the line count results.  Where as <code>parallel</code> has the data organized in the expected manner.</p>
+<p>Now, let's say we want to run the same command, using half of our computer's resources. How would we do that for both <code>xargs</code> and <code>parallel</code>?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span>-print0<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-0<span class="w"> </span>-P<span class="w"> </span><span class="k">$(($(</span>nproc<span class="k">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">2</span><span class="k">))</span><span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>parallel<span class="w"> </span>-j<span class="w"> </span><span class="m">50</span>%<span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+</code></pre></div>
+<p>For <code>xargs</code>, we have to use the <code>nproc</code> utility to get the total number of cores on our system, then divide that result by 2 to configure xargs to use 50% of our cores.
+For <code>parallel</code>, we simply have to configure it by changing the <code>-j</code> option to <code>-j 50%</code>. </p>
+<p>However, notice that parallel keeps the echo filename: wc -l results paired, where as xargs does not. When you need to print the results of the command to screen, parallel handles this better. However, if you are running a data processing command with output files, either way of running the commands would work. Later in the workshop, we will write a BASH script to do a similar process. </p>
+<p>Now, let's clean up the empty files. For any lines that have "gzip: ./set4/SRR5130826_1.fastq.gz: unexpected end of file", please delete these files, then rerun the wc -l commands to make sure the data has been cleaned up. Now that we have a list of files, we could manually run the <code>rm filename</code> command, but let's have find delete these files for us!</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w"> </span>-size<span class="w"> </span><span class="m">0</span><span class="w"> </span>-delete
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>parallel<span class="w"> </span>-j<span class="w"> </span><span class="m">50</span>%<span class="w"> </span><span class="s1">&#39;echo -n &quot;{}: &quot;; zcat &quot;{}&quot; | wc -l&#39;</span>
+</code></pre></div>
+<h4 id="symbolic-links">Symbolic Links</h4>
+<p>Since copying or even moving large files (like sequence data) around your filesystem may be impractical, we can use links to reference ‘distant’ files without duplicating the data in the files. Symbolic links are disposable pointers that refer to other files, but behave like the referenced files in commands.</p>
+<div class="admonition tip">
+<p class="admonition-title">Best Practice: Default to Symbolic Links</p>
+<p>You should, by default, always use a symbolic (<code>-s</code>) link when working with sequence data.</p>
+</div>
+<p>Hard links point to the location of the data on the hard drive while symbolic links point to a secondary location of the data on the hard drive (or the original file itself).</p>
+<p><img alt="" src="https://ucdavis-bioinformatics-training.github.io/2019-Winter-Bioinformatics_Command_Line_and_R_Prerequisites_Workshop/CLI_Intro/hard_vs_symbolic.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">The Drawback of Hard Links</p>
+<p>Deleting the original file becomes much more difficult with hard links because all hard links need to be deleted first before the space is actually freed up.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>mkdir<span class="w"> </span>raw_reads
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w">  </span>-exec<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span><span class="o">{}</span><span class="w"> </span>raw_reads/<span class="w"> </span><span class="se">\;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>ls<span class="w"> </span>-alh<span class="w"> </span>raw_reads/
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>total<span class="w"> </span>119K
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>drwxr-sr-x<span class="w"> </span><span class="m">2</span><span class="w"> </span>user<span class="w"> </span>rc-group<span class="w"> </span><span class="m">8</span>.0K<span class="w"> </span>Mar<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">13</span>:31<span class="w"> </span>.
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>drwxr-sr-x<span class="w"> </span><span class="m">7</span><span class="w"> </span>user<span class="w"> </span>rc-group<span class="w"> </span><span class="m">8</span>.0K<span class="w"> </span>Mar<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">13</span>:29<span class="w"> </span>..
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>user<span class="w"> </span>rc-group<span class="w">   </span><span class="m">28</span><span class="w"> </span>Mar<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">13</span>:31<span class="w"> </span>SRR5130755_1.fastq.gz<span class="w"> </span>-&gt;<span class="w"> </span>./set1/SRR5130755_1.fastq.gz
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>user<span class="w"> </span>rc-group<span class="w">   </span><span class="m">33</span><span class="w"> </span>Mar<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">13</span>:31<span class="w"> </span>SRR5130761_1.fastq.gz<span class="w"> </span>-&gt;<span class="w"> </span>./set2/dir1/SRR5130761_1.fastq.gz
+</code></pre></div>
+<p>These linked files are blinking in red. It's because the symlink is relative, indicated by the <code>-&gt;</code> pointer to the linked file. In order to correctly symlink this data, we have to include the absolute path, rather than relative path.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>find<span class="w"> </span><span class="nv">$PWD</span><span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*.fastq.gz&quot;</span><span class="w">  </span>-exec<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span><span class="o">{}</span><span class="w"> </span>raw_reads/<span class="w"> </span><span class="se">\;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>ls<span class="w"> </span>-alh<span class="w"> </span>raw_reads/
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>total<span class="w"> </span>119K
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>drwxr-sr-x<span class="w"> </span><span class="m">2</span><span class="w"> </span>user<span class="w"> </span>rc-group<span class="w"> </span><span class="m">8</span>.0K<span class="w"> </span>Mar<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">13</span>:33<span class="w"> </span>.
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>drwxr-sr-x<span class="w"> </span><span class="m">7</span><span class="w"> </span>user<span class="w"> </span>rc-group<span class="w"> </span><span class="m">8</span>.0K<span class="w"> </span>Mar<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">13</span>:29<span class="w"> </span>..
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>user<span class="w"> </span>rc-group<span class="w">   </span><span class="m">92</span><span class="w"> </span>Mar<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">13</span>:33<span class="w"> </span>SRR5130755_1.fastq.gz<span class="w"> </span>-&gt;<span class="w"> </span>/data/gpfs/projects/testdata1/set1/SRR5130755_1.fastq.gz
+</code></pre></div>
+<p>These linked files are not blinking red. This time the symlink points to an absolute path on the filesystem where the file is located. Now, we can treat these files as if they are present in the current directory.</p>
+<h4 id="disk-usage-analysis-du-df-and-ncdu">Disk usage analysis: du, df, and ncdu</h4>
+<p>Monitoring disk usage is very important when processing data. Filesystems can quickly fill up when processing many samples. In order to monitor usage, UNIX provides two utilities: df and du.</p>
+<p>The <code>df</code> utility stands for "disk free".  This is used to find disk usage for any filesystems connected to the computer. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span>user@node:~$<span class="w"> </span>df<span class="w"> </span>-h
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Filesystem<span class="w">              </span>Size<span class="w">  </span>Used<span class="w"> </span>Avail<span class="w"> </span>Use%<span class="w"> </span>Mounted<span class="w"> </span>on
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>udev<span class="w">                     </span>63G<span class="w">     </span><span class="m">0</span><span class="w">   </span>63G<span class="w">   </span><span class="m">0</span>%<span class="w"> </span>/dev
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>tmpfs<span class="w">                    </span>13G<span class="w">  </span><span class="m">3</span>.4M<span class="w">   </span>13G<span class="w">   </span><span class="m">1</span>%<span class="w"> </span>/run
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>/dev/nvme0n1p2<span class="w">          </span><span class="m">1</span>.8T<span class="w">  </span><span class="m">1</span>.1T<span class="w">  </span>682G<span class="w">  </span><span class="m">61</span>%<span class="w"> </span>/
+</code></pre></div>
+<p>The <code>du</code> utility stands for "disk usage". This allows a user to summarize a directory or directory structure with total storage size of each directory.  Let's run it on our test data.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>du<span class="w"> </span>-h
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>103K<span class="w">    </span>./raw_reads
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>140M<span class="w">    </span>./set1
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>239M<span class="w">    </span>./set2
+</code></pre></div>
+<p>The <code>-h</code> option outputs the storage counts in human readable format.  We can also use the <code>-s</code> option to summarize only the folder described, rather than the directory structure.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>du<span class="w"> </span>-sh<span class="w"> </span>.
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="m">2</span>.5G<span class="w">    </span>.
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>du<span class="w"> </span>-sh<span class="w"> </span>set1/
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>140M<span class="w">    </span>set1/
+</code></pre></div>
+<p>The last utility is not installed by default on systems: <code>ncdu</code>.  Let's install this utility with conda and explore using it.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>ncdu
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1"># OR</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>mamba<span class="w"> </span>install<span class="w"> </span>ncdu
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w"> </span>ncdu
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../advanced/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Advanced Tools &amp; Wrap-up">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Advanced Tools & Wrap-up
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../text_processing/" class="md-footer__link md-footer__link--next" aria-label="Next: Text Processing">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Text Processing
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 University of Nevada, Reno
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

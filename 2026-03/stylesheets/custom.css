@@ -1,0 +1,16 @@
+:root {
+  --md-primary-fg-color: #041E42; /* Official Nevada Blue */
+}
+
+/* --- Add this below your existing root variables --- */
+
+/* Make content links a standard recognizable blue */
+.md-typeset a {
+  color: #007BFF; 
+}
+
+/* Optional: Add a slightly darker blue and an underline when hovering */
+.md-typeset a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
