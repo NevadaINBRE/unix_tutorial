@@ -1,0 +1,53 @@
+site_name: Nevada Bioinformatics Center - Unix Workshop
+site_url: https://nevadainbre.github.io/unix_tutorial/
+
+repo_name: NevadaINBRE/unix_tutorial
+repo_url: https://github.com/NevadaINBRE/unix_tutorial
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  logo: images/university-logo.svg
+  favicon: images/university-logo.svg
+  palette:
+    primary: custom
+    accent: blue
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - navigation.top    
+    - navigation.footer 
+
+copyright: Copyright &copy; 2026 University of Nevada, Reno
+
+extra_css:
+  - stylesheets/custom.css
+
+markdown_extensions:
+  - admonition          
+  - pymdownx.details     
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+
+extra:
+  version:
+    provider: mike
+
+nav:
+  - Welcome: index.md
+  - Day 1 - Beginner UNIX:
+    - Introduction: anatomy.md
+    - Navigation & Pathing: navigation.md
+    - Software Installation: conda.md
+    - Working with Files: files.md
+    - Downloading & Compression: data.md
+    - Advanced Tools & Wrap-up: advanced.md
+  - Day 2 - Intermediate UNIX:
+    - Intro & File Management: file_management.md
+    - Text Processing: text_processing.md
+    - Shell Scripting: shell_scripting.md
+    - Remote Computing: remote_computing.md
+    - Recap & Cheat Sheets: intermediate_wrapup.md

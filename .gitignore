@@ -1,0 +1,12 @@
+# MkDocs build directory
+site/
+
+# macOS system files (if anyone works on a Mac)
+.DS_Store
+
+# Python/Environment files
+__pycache__/
+*.pyc
+venv/
+env/
+.env
