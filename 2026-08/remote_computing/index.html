@@ -1,0 +1,1281 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nevadainbre.github.io/unix_tutorial/2026-08/remote_computing/">
+      
+      
+        <link rel="prev" href="../shell_scripting/">
+      
+      
+        <link rel="next" href="../intermediate_wrapup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../images/university-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Remote Computing - Nevada Bioinformatics Center - Unix Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#remote-computing-file-transfers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Nevada Bioinformatics Center - Unix Workshop" class="md-header__button md-logo" aria-label="Nevada Bioinformatics Center - Unix Workshop" data-md-component="logo">
+      
+  <img src="../images/university-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nevada Bioinformatics Center - Unix Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Remote Computing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/NevadaINBRE/unix_tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NevadaINBRE/unix_tutorial
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Nevada Bioinformatics Center - Unix Workshop" class="md-nav__button md-logo" aria-label="Nevada Bioinformatics Center - Unix Workshop" data-md-component="logo">
+      
+  <img src="../images/university-logo.svg" alt="logo">
+
+    </a>
+    Nevada Bioinformatics Center - Unix Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/NevadaINBRE/unix_tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NevadaINBRE/unix_tutorial
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 1 - Beginner UNIX
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 1 - Beginner UNIX
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anatomy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigation & Pathing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Downloading & Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 1 Wrap-up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 2 - Intermediate UNIX
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 2 - Intermediate UNIX
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file_management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro & File Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text_processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shell_scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shell Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Computing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Computing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Learning Objectives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secure-remote-access-with-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure remote access with ssh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#efficient-file-transfer-with-rsync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Efficient file transfer with rsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-in-the-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running in the Background
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transitioning-to-hpc-schedulers-slurm-pbs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transitioning to HPC Schedulers (SLURM &amp; PBS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slurm-script-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLURM Script Anatomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-screen-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using screen command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#screen-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Screen Cheat Sheet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-ssh-rsync-and-scheduler-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting: SSH, rsync, and Scheduler Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intermediate_wrapup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recap & Cheat Sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Learning Objectives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secure-remote-access-with-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure remote access with ssh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#efficient-file-transfer-with-rsync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Efficient file transfer with rsync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-in-the-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running in the Background
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transitioning-to-hpc-schedulers-slurm-pbs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transitioning to HPC Schedulers (SLURM &amp; PBS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slurm-script-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLURM Script Anatomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-screen-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using screen command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#screen-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Screen Cheat Sheet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-ssh-rsync-and-scheduler-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting: SSH, rsync, and Scheduler Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="remote-computing-file-transfers">Remote Computing &amp; File Transfers</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this section, you should be able to:</p>
+<ul>
+<li>Connect to remote systems with SSH</li>
+<li>Configure key-based SSH authentication</li>
+<li>Transfer files efficiently with <code>rsync</code></li>
+<li>Run long jobs safely using background tools and schedulers</li>
+<li>Understand the core fields in a SLURM submission script</li>
+</ul>
+<h4 id="secure-remote-access-with-ssh">Secure remote access with ssh</h4>
+<p>One of the reasons researchers use Linux is because it is easy to allow users to remotely connect to a server in a secure manner, using <code>ssh</code>. Below is how you would connect using a <em>Linux</em> or <em>Mac OSX</em> computer using a TERMINAL program. Both of these operating systems should have a terminal installed by default.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ssh<span class="w"> </span>yournetidhere@pronghorn.rc.unr.edu<span class="w"> </span>
+</code></pre></div>
+<p>If this is your first time connecting to the server, you may need to accept connecting to the remote server by typing "yes". </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>The<span class="w"> </span>authenticity<span class="w"> </span>of<span class="w"> </span>host<span class="w"> </span><span class="s1">&#39;pronghorn.rc.unr.edu (134.197.76.4)&#39;</span><span class="w"> </span>can<span class="err">&#39;</span>t<span class="w"> </span>be<span class="w"> </span>established.
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ED25519<span class="w"> </span>key<span class="w"> </span>fingerprint<span class="w"> </span>is<span class="w"> </span>SHA256:QAFX5eUaSvFi3/+IRuP6Zm8RM6OcGRZb5vySBgq/yZ4.
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>This<span class="w"> </span>key<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>known<span class="w"> </span>by<span class="w"> </span>any<span class="w"> </span>other<span class="w"> </span>names
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Are<span class="w"> </span>you<span class="w"> </span>sure<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span><span class="k">continue</span><span class="w"> </span>connecting<span class="w"> </span><span class="o">(</span>yes/no/<span class="o">[</span>fingerprint<span class="o">])</span>?<span class="w"> </span>Yes
+</code></pre></div>
+<p>You will then be prompted to type in your netid password. As you type, the cursor will not move/display text in order to keep your password secure. An alternative terminal that I like on OSX is <a href="https://iterm2.com/">iTerm</a>.</p>
+<p><em>Windows</em> does not have <code>ssh</code> functionality built into the system. You will need to setup a program in order to remotely connect to Pronghorn. You can enable WSL using this <a href="https://learn.microsoft.com/en-us/windows/wsl/install">tutorial from Microsoft</a>. Once installed, you will configure the connection information similar to above.</p>
+<h4 id="efficient-file-transfer-with-rsync">Efficient file transfer with rsync</h4>
+<p><code>rsync</code> (Remote Sync) is a powerful and efficient file-copying tool used in Unix/Linux systems. It allows fast, incremental file transfers between local and remote systems while minimizing data transfer by copying only the differences between source and destination files. It is commonly used for backups, mirroring, and synchronization.</p>
+<ul>
+<li>Fast &amp; Efficient – Transfers only modified parts of files.</li>
+<li>Preserves File Attributes – Retains timestamps, permissions, and symbolic links.</li>
+<li>Supports SSH for Secure Transfers – Encrypts data over networks.</li>
+<li>Incremental Backup – Copies only changed files to save bandwidth.</li>
+<li>Can Work Locally or Remotely – Syncs files between directories or different systems.</li>
+</ul>
+<p>The basic syntax is as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rsync<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>SOURCE<span class="w"> </span>DESTINATION
+</code></pre></div>
+<p>Now for some examples. In the next example, we backup file.txt to /backup/ directory with the -a and -v options. <code>-a</code> enables Archive Mode which preserves timestamps, permissions, symbolic links, etc. <code>-v</code> enables verbose mode so that we can show the details of the file transfer.</p>
+<div class="admonition warning">
+<p class="admonition-title">Do Not Execute</p>
+<p>Since we do not want to dramatically increase the storage on your local laptops/workstations, the following examples are for reference and <strong>should not be run</strong>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>rsync<span class="w"> </span>-av<span class="w"> </span>file.txt<span class="w"> </span>/backup/
+</code></pre></div>
+</div>
+<p>In the next example, we backup the contents of the <code>docs/</code> directory in the user home folder to a <code>/backup/docs/</code> folder.</p>
+<div class="admonition tip">
+<p class="admonition-title">Mind the Trailing Slash</p>
+<p>The trailing slash (<code>/</code>) is incredibly important in <code>rsync</code>:</p>
+<ul>
+<li><code>/docs/</code> → Syncs the <em>contents</em> of docs to <code>/backup/docs/</code>.</li>
+<li><code>/docs</code> → Syncs the <em>entire docs directory itself</em> inside <code>/backup/</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>rsync<span class="w"> </span>-av<span class="w"> </span>/home/user/docs/<span class="w"> </span>/backup/docs/
+</code></pre></div>
+</div>
+<p>Now, for copying data from a remote server, we could use the following command. The string <code>user@remote_server:/backup/docs/</code> tells rsync where the data is on the remote server with the remote connection string, and the second portion tells rsync where to copy the data to the local computer.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>rsync<span class="w"> </span>-av<span class="w"> </span>user@remote_server:/backup/docs/<span class="w"> </span>/home/user/docs/
+</code></pre></div>
+<p>Likewise, we can copy data from the local computer and send it to a remote server.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>rsync<span class="w"> </span>-av<span class="w">  </span>/home/user/docs/<span class="w"> </span>user@remote_server:/backup/docs/
+</code></pre></div>
+<p>Lastly, we can tell rsync to delete files that are not present in the destination folder when they are not present in the source folder.</p>
+<div class="admonition danger">
+<p class="admonition-title">Data Loss Warning</p>
+<p><strong>THERE IS NO RECOVERING DATA FROM THE DELETE COMMAND.</strong> Always run a <code>--dry-run</code> which simulates the command and shows you what <em>would</em> happen without actually making changes.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>rsync<span class="w"> </span>-av<span class="w"> </span>--delete<span class="w"> </span>--dry-run<span class="w"> </span>/home/user/docs/<span class="w"> </span>user@remote_server:/backup/docs/
+</code></pre></div>
+</div>
+<p>Additionally, you can have a list of file types you want it to exclude.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>rsync<span class="w"> </span>-av<span class="w"> </span>--exclude<span class="w"> </span><span class="s2">&quot;*.log&quot;</span><span class="w"> </span>--exclude<span class="w"> </span><span class="s2">&quot;tmp/&quot;</span><span class="w"> </span>/home/user/docs/<span class="w"> </span>user@remote_server:/backup/docs/
+</code></pre></div>
+<p>If you are limited by bandwidth, you can speed up the transfer by using the <code>-z</code> option to compress the data during transfer.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>rsync<span class="w"> </span>-avz<span class="w"> </span>--exclude<span class="w"> </span><span class="s2">&quot;*.log&quot;</span><span class="w"> </span>--exclude<span class="w"> </span><span class="s2">&quot;tmp/&quot;</span><span class="w"> </span>/home/user/docs/<span class="w"> </span>user@remote_server:/backup/docs/
+</code></pre></div>
+<p><code>rsync</code> is an essential tool for file synchronization, backups, and mirroring between local and remote systems. It is fast, efficient, and secure, making it a great alternative to scp or cp for large file transfers.</p>
+<h4 id="running-in-the-background">Running in the Background</h4>
+<p>Sometimes it’s useful to continue working on the command line, even after you’ve executed a command that’s going to take a while to finish. Normally this command would occupy the shell, and prevent you from typing in commands and receiving results. But we can ‘put jobs in the background’ so that they don’t occupy your shell directly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span>sleep<span class="w"> </span><span class="m">1000000</span>
+</code></pre></div>
+<p><code>Ctrl-Z</code> to pause (stop) the command</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span><span class="nb">bg</span>
+</code></pre></div>
+<p>To restart the last command in the background. ‘^Z’ first suspends the sleep command. Then, ‘bg’ resumes running that command in the background, so that it doesn’t occupy the terminal. The output of the ‘bg’ command tells you that you have one command running in the background. You could start more, suspend them, then resume them in the background, and query what background jobs are running or are suspended, not running:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span><span class="nb">jobs</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Running<span class="w">                 </span>sleep<span class="w"> </span><span class="m">1000000</span><span class="w"> </span><span class="p">&amp;</span>
+</code></pre></div>
+<p>We can also start a job in the background in one step, without having to suspend then resume it, using the ‘&amp;’ character at the end of the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span>sleep<span class="w"> </span><span class="m">5000000</span><span class="w"> </span><span class="p">&amp;</span>
+</code></pre></div>
+<p>If we want to delete these jobs for any reason, we can kill them using the numbering that ‘jobs’ reveals:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span><span class="nb">jobs</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="o">[</span><span class="m">1</span><span class="o">]</span>-<span class="w">  </span>Running<span class="w">                 </span>sleep<span class="w"> </span><span class="m">1000000</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="o">[</span><span class="m">2</span><span class="o">]</span>+<span class="w">  </span>Running<span class="w">                 </span>sleep<span class="w"> </span><span class="m">5000000</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span><span class="nb">kill</span><span class="w"> </span>%1
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span><span class="nb">jobs</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="o">[</span><span class="m">1</span><span class="o">]</span>-<span class="w">  </span>Terminated<span class="w">              </span>sleep<span class="w"> </span><span class="m">1000000</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="o">[</span><span class="m">2</span><span class="o">]</span>+<span class="w">  </span>Running<span class="w">                 </span>sleep<span class="w"> </span><span class="m">5000000</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">   </span><span class="nb">kill</span><span class="w"> </span>%2
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">   </span><span class="nb">jobs</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="o">[</span><span class="m">2</span><span class="o">]</span>+<span class="w">  </span>Terminated<span class="w">              </span>sleep<span class="w"> </span><span class="m">5000000</span>
+</code></pre></div>
+<p>Finally, the ‘nohup’ command (from ‘no hangup’!) makes jobs extra resistant to lost connections or terminal problems. In other words, even jobs running in the background can be terminated if one’s shell dies. ‘nohup’ separates the running job from the shell, so it’ll keep running until it dies or is actively killed by you.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span>nohup<span class="w"> </span>sleep<span class="w"> </span><span class="m">1000000</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="m">34993</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">   </span><span class="nb">jobs</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Running<span class="w">                 </span>nohup<span class="w"> </span>sleep<span class="w"> </span><span class="m">1000000</span><span class="w"> </span><span class="p">&amp;</span>
+</code></pre></div>
+<p>Output is dumped into the ‘nohup.out’ file unless specifically redirected in your command. If you used bg to send a process to the background you can use ‘disown’ to “nohup” the process.</p>
+<h4 id="transitioning-to-hpc-schedulers-slurm-pbs">Transitioning to HPC Schedulers (SLURM &amp; PBS)</h4>
+<p>While tools like <code>nohup</code> and <code>bg</code> are great for long-running scripts, they have a major limitation on shared remote servers (like Pronghorn). When you log in via SSH, you land on a "login node" or "head node." This node is meant for moving files, editing scripts, and compiling code, not for heavy data processing. If everyone ran their <code>nohup</code> jobs on the login node, the server would quickly crash.</p>
+<p>Instead, High-Performance Computing (HPC) clusters use <strong>Job Schedulers</strong>, primarily <strong>SLURM</strong> (Simple Linux Utility for Resource Management) or <strong>PBS</strong> (Portable Batch System). Pronghorn uses <strong>SLURM</strong>.</p>
+<p>Schedulers act as a traffic cop. Instead of running a script directly, you write a wrapper script that asks the scheduler for resources (e.g., "I need 4 CPU cores and 16GB of RAM for 2 hours"), and the scheduler places your job in a queue to run on a dedicated "compute node."</p>
+<p>Here is what our <code>filelist_linecounter.sh</code> script might look like wrapped in a basic SLURM <code>sbatch</code> submission script:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1">#SBATCH --job-name=line_counter</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1">#SBATCH --nodes=1</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1">#SBATCH --ntasks=1</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="c1">#SBATCH --cpus-per-task=4</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1">#SBATCH --mem=8G</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1">#SBATCH --time=02:00:00</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c1">#SBATCH --output=line_counter_%j.out</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="c1">#SBATCH --error=line_counter_%j.err</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="c1"># Load any necessary modules or activate conda environments here</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="c1"># source activate my_env</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="c1"># Run our custom script</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>~/bin/filelist_linecounter.sh<span class="w"> </span>files.txt
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Batch vs. Interactive</p>
+<p>You submit the script above using <code>sbatch myscript.sh</code> (or <code>qsub</code> for PBS). The scheduler will run it in the background as soon as resources are available, completely replacing the need for <code>nohup</code>.</p>
+</div>
+<h4 id="slurm-script-anatomy">SLURM Script Anatomy</h4>
+<p>Common directives in the example script:</p>
+<ul>
+<li><code>--job-name</code>: label shown in scheduler queues</li>
+<li><code>--cpus-per-task</code>: CPU cores requested for one task</li>
+<li><code>--mem</code>: memory requested (for example, <code>8G</code>)</li>
+<li><code>--time</code>: walltime limit in <code>HH:MM:SS</code></li>
+<li><code>--output</code> and <code>--error</code>: log files for STDOUT and STDERR</li>
+</ul>
+<p>Use realistic values. Over-requesting resources can delay queue start time.</p>
+<h4 id="using-screen-command">Using screen command</h4>
+<p>This section will show you how to configure and use screen.</p>
+<p>When you connect to a remote server via ssh/PUTTY, you are presented one window to do all your work. However, there are times where you may be editing a file and want to look up a file path/location in order to configure it within your script you are writing. In order to enable this, you can use the <code>screen</code> command. Screen will create virtual windows on the remote system so you can perform multiple actions at the same time.</p>
+<p>First, we need to download a screen configuration file in our home directory called ".screenrc".  I have one hosted on our core's github page here: <a href="https://raw.githubusercontent.com/Nevada-Bioinformatics-Center/unix_configurations/main/.screenrc">https://raw.githubusercontent.com/Nevada-Bioinformatics-Center/unix_configurations/main/.screenrc</a></p>
+<p>This configuration file sets up how the windows will be displayed when you use screen. Use <code>wget</code> to download this file to your home directory:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span>user@node:~$<span class="w"> </span>wget<span class="w"> </span><span class="o">[</span>https://raw.githubusercontent.com/Nevada-Bioinformatics-Center/unix_configurations/main/.screenrc<span class="o">](</span>https://raw.githubusercontent.com/Nevada-Bioinformatics-Center/unix_configurations/main/.screenrc<span class="o">)</span>
+</code></pre></div>
+<p>Now that we have the configuration file, let's start a session:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>user@login-0<span class="w"> </span>testdata1<span class="o">]</span>$<span class="w">  </span>screen
+</code></pre></div>
+<p>Now that you are running screen, you will see the bottom portion of your terminal has some new text. In green towards the bottom left of your screen, you have the hostname of the computer you are on. Next to this you have your virtual windows numbered from 0 to N. By default right after you run screen, you will have 1 named window as <code>(0*$bash)</code>.</p>
+<p>Let's create a new screen window by pressing the <code>CTRL+A</code> keys together. These two keys together tells the server that the next key that is pressed will be a screen command. </p>
+<p>Press the "c" key after you press <code>CTRL+A</code> keys. This will create a new window labeled <code>(1*$bash)</code>. You can then switch between these virtual windows by pressing the <code>CTRL+A</code> keys together then typing the number of the window you want to view.</p>
+<p>When you are finished working, you can close your terminal to end your session. Then, the next day you want to work on the project you can SSH to Pronghorn and then issue the <code>screen -x</code> command to restore your previous screen session. Pretty Nifty!</p>
+<div class="admonition info">
+<p class="admonition-title">Alternative: tmux</p>
+<p>You might also hear about a newer tool called <code>tmux</code> (Terminal Multiplexer). It does the exact same core job as <code>screen</code> but offers more advanced features like split-panes and deep scriptability. While power users often prefer <code>tmux</code>, we focus on <code>screen</code> in this workshop because it is the universally available workhorse, it comes pre-installed on practically every Linux server and HPC cluster you will ever encounter.</p>
+</div>
+<h3 id="screen-cheat-sheet">Screen Cheat Sheet</h3>
+<p><img alt="GNU Screen Cheat Sheet" src="../images/screen_cheatsheet.png" /></p>
+<h2 id="troubleshooting-ssh-rsync-and-scheduler-errors">Troubleshooting: SSH, rsync, and Scheduler Errors</h2>
+<ul>
+<li><strong>SSH hangs or times out</strong>: run <code>ssh -v user@host</code> to inspect connection details.</li>
+<li><strong>Permission denied (publickey)</strong>: verify key is in <code>~/.ssh/authorized_keys</code> and permissions are strict (<code>chmod 700 ~/.ssh</code>, <code>chmod 600 ~/.ssh/authorized_keys</code>).</li>
+<li><strong><code>rsync</code> copied unexpected folder nesting</strong>: re-check trailing slash behavior on source path.</li>
+<li><strong>SLURM job pending too long</strong>: inspect queue and requested resources with <code>squeue -u $USER</code>.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../shell_scripting/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Shell Scripting">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Shell Scripting
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../intermediate_wrapup/" class="md-footer__link md-footer__link--next" aria-label="Next: Recap &amp; Cheat Sheets">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Recap & Cheat Sheets
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 University of Nevada, Reno
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.breadcrumbs", "navigation.instant", "navigation.top", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
