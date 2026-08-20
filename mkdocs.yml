@@ -15,6 +15,8 @@ theme:
   features:
     - content.code.copy
     - content.code.annotate
+    - navigation.breadcrumbs
+    - navigation.instant
     - navigation.top    
     - navigation.footer 
 
@@ -44,10 +46,11 @@ nav:
     - Software Installation: conda.md
     - Working with Files: files.md
     - Downloading & Compression: data.md
-    - Advanced Tools & Wrap-up: advanced.md
+    - Day 1 Wrap-up: advanced.md
   - Day 2 - Intermediate UNIX:
     - Intro & File Management: file_management.md
     - Text Processing: text_processing.md
     - Shell Scripting: shell_scripting.md
     - Remote Computing: remote_computing.md
     - Recap & Cheat Sheets: intermediate_wrapup.md
+  - Troubleshooting: troubleshooting.md

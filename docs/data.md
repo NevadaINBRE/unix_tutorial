@@ -1,5 +1,14 @@
 # Downloading and Compression
 
+## Learning Objectives
+
+By the end of this section, you should be able to:
+
+* Download files from URLs using `wget`
+* Inspect compressed data safely with `zless` and `zcat`
+* Uncompress files when appropriate with `gunzip`
+* Count FASTA/FASTQ records using reliable command-line patterns
+
 ## 1. Downloading Data with Terminal
 
 Let's start working with some compressed data now. First, let's change directories to our training folder then download a FASTA file for the SARS-CoV-2 genome reference.
@@ -8,7 +17,7 @@ To do this, we will use the `wget` command to download a file from the internet:
 
 ```bash
 cd training
-wget [http://ftp.ensemblgenomes.org/pub/viruses/fasta/sars_cov_2/dna/Sars_cov_2.ASM985889v3.dna.toplevel.fa.gz](http://ftp.ensemblgenomes.org/pub/viruses/fasta/sars_cov_2/dna/Sars_cov_2.ASM985889v3.dna.toplevel.fa.gz)
+wget http://ftp.ensemblgenomes.org/pub/viruses/fasta/sars_cov_2/dna/Sars_cov_2.ASM985889v3.dna.toplevel.fa.gz
 ```
 
 ## 2. Working with Compressed Data
@@ -62,7 +71,7 @@ Link: [https://biox.unr.edu/ftp/biox_microbiome_workshop/SRR19195566_covid_sra_d
 This is hosted on our webserver. However, there is a web certificate problem, so we will need to use the `--no-check-certificate` command line option to allow `wget` to download the file.
 
 ```bash
-wget --no-check-certificate [https://biox.unr.edu/ftp/biox_microbiome_workshop/SRR19195566_covid_sra_data.fastq.gz](https://biox.unr.edu/ftp/biox_microbiome_workshop/SRR19195566_covid_sra_data.fastq.gz)
+wget --no-check-certificate https://biox.unr.edu/ftp/biox_microbiome_workshop/SRR19195566_covid_sra_data.fastq.gz
 ```
 
 Look at the file sizes of the files with the `ls` command.
@@ -81,16 +90,31 @@ zless SRR19195566_covid_sra_data.fastq.gz
 
 This is an example of the first read from this file. The first line is the header line which has the name information of the read. The second line is the sequence line which has the string of "A,C,G,T"s. The third line is another header line. The fourth line contains the sequence quality information.
 
-Let's use `grep` to count how many sequences we have in this file. Since we know that each set of 4 lines contains information for 1 read .... and each of the four lines starts with a `@` in the header, let's use the `@` character with `grep` to count the number of reads we have in this file. Remember to use `zgrep` instead of `grep` because this is a compressed file.
+Let's use `grep` to count how many sequences we have in this file. Since each read is represented by 4 lines and only the header line starts with `@`, we should anchor the match to the start of each line using `^@`. Remember to use `zgrep` instead of `grep` because this is a compressed file.
 
 ```bash
-zgrep -c "@" SRR19195566_covid_sra_data.fastq.gz 
+zgrep -c "^@" SRR19195566_covid_sra_data.fastq.gz
 ```
 
 Can you think of another way to count the number of sequences?
 
 ```bash
-zcat SRR19195566_covid_sra_data.fastq.gz | grep "@" | wc -l
+zcat SRR19195566_covid_sra_data.fastq.gz | wc -l | awk '{print $1/4}'
 ```
 
 There are many ways to get to the same result! This is true for many bioinformatic analyses.
+
+## Counting FASTA and FASTQ Records Correctly
+
+Quick rules:
+
+* FASTA: count header lines that start with `>`.
+* FASTQ: count total lines and divide by 4, or count only header lines anchored with `^@`.
+
+Examples:
+
+```bash
+grep -c "^>" Sars_cov_2.ASM985889v3.dna.toplevel.fa
+zgrep -c "^@" SRR19195566_covid_sra_data.fastq.gz
+zcat SRR19195566_covid_sra_data.fastq.gz | wc -l | awk '{print $1/4}'
+```

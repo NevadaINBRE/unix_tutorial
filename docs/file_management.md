@@ -15,9 +15,20 @@ The true power of the Unix command line lies in its ability to string together s
 
 If you can master just a handful of these advanced commands, you will fundamentally change how quickly and efficiently you can process your research data. Let's dive in.
 
-### Advanced File & Directory Management
+## Learning Objectives
 
-#### Batch processing & working with multiple files
+By the end of this section, you should be able to:
+
+* Locate files across nested directory structures with `find`
+* Run commands over many files with `-exec`, `xargs`, and `parallel`
+* Choose symbolic links over copying when organizing large datasets
+* Monitor storage with `df`, `du`, and `ncdu`
+
+## Advanced File and Directory Management
+
+## 1. Finding and Processing Many Files
+
+### Batch Processing and Working with Multiple Files
 
 Often times researchers have to deal with large datasets comprised of a lot of smaller individual files. Linux has some utilities to help work with multiple files in an automated fashion. The utilities we will be covering in this section are: `find`, `xargs`, `parallel`, for loops in BASH, symlinks/hardlinks, `du`, `df`, and `ncdu`.
 
@@ -49,32 +60,32 @@ Review the output and ensure that only .fastq.gz files are printed.
 
 Now that we are finding our correct files, we want to get some preliminary Quality Control information about this data. We can have find run a utility for each file that gets returned.  In this case, we want to run ls for each file so that we can get the file sizes for the dataset. 
 
-In order to do this, we will be adding the `--exec` flag which then executes the next command line utility listed with any parameters also. The file name `find` found will be replaced with the {} characters. Then the `\;` signifies to find that is the end of the command.
+In order to do this, we will add the `-exec` flag, which executes another command for every file returned by `find`. The file name found by `find` is replaced with `{}`. The `\;` marks the end of the command passed to `-exec`.
 
 ```bash
 find . -type f -name "*.fastq.gz" -exec ls -lh {} \;
 ```
 
-Great, we have a list of filesizes for everything! However, what if some of the files had different cases then what we wrote in the -name search?  Since UNIX is case sensitive, our find command would not find those files.  Instead, we can use the -iname option to use CASE INSENSITIVE search.
+Great, we have a list of file sizes for everything. However, what if some of the files had different case than what we wrote in the `-name` search? Since Unix is case-sensitive, our `find` command would not find those files. Instead, we can use the `-iname` option for a case-insensitive search.
 
 ```bash
 find . -type f -iname "*.fastq.gz" -exec ls -lh {} \;
 ```
 
-Now, let's try to get the number of lines in the file with the utility `wc -l`.  However, our data is compressed, so we would like to use two utilities in order to keep the data compressed but calculate the number of lines. `zcat` to uncompress the data on the fly then piped into `wc -l` to count the number of lines in the file. 
+Now, let's try to get the number of lines in each file using `wc -l`. Our data is compressed, so we need `zcat` to uncompress on the fly, then pipe into `wc -l`.
 
 ```bash
-find . -type f -name "*.fastq.gz" --exec zcat {} | wc -l \;
+find . -type f -name "*.fastq.gz" -exec zcat {} \; | wc -l
 ```
 
-You will notice this command doesn't work. Find can't work with pipes, but there is an alternative! We can use `xargs` or `parallel` to run these more complex commands after find.
+This command runs, but it gives one combined total rather than one result per file. For per-file output, `xargs` and `parallel` are clearer.
 
 ```bash
 find . -type f -iname "*.fastq.gz" -print0 | xargs -0 -I {} sh -c 'echo -n "{}: "; zcat "{}" | wc -l'
 find . -type f -iname "*.fastq.gz" | parallel 'echo -n "{}: "; zcat "{}" | wc -l'
 ```
 
-Lets break down each of these commands:
+Let's break down each of these commands:
 
 * **`xargs`:**
     ```bash
@@ -88,16 +99,16 @@ Lets break down each of these commands:
     ```
     A similar find command was used as in previous examples. Notice there is less syntax than the `xargs` example above. This takes the results from the `find` command, pipes it, and then runs `parallel` to execute the command within the single quotes.
 
-Parallel was designed after xargs to fix some of it's limitations. Therefore, to parallelize commands, I suggest using parallel which we will be going over more options next.
+`parallel` was designed after `xargs` to improve some limitations. For complex parallel runs, `parallel` is often easier to read and maintain.
 
-You will notice in the previous two executions, `xargs` took a while to run, where as the `parallel` command ran much quicker. This is because by default, `parallel` uses all CPU cores on a system. In contrast, `xargs` defaults to only using 1 core.  You can customize these options with the following commands.
+You will notice in the previous two executions, `xargs` took a while to run, whereas the `parallel` command ran much quicker. This is because by default, `parallel` uses all CPU cores on a system. In contrast, `xargs` defaults to only 1 core. You can customize these options with the following commands.
 
 ```bash
 find . -type f -iname "*.fastq.gz" -print0 | xargs -0 -P 2 -I {} sh -c 'echo -n "{}: "; zcat "{}" | wc -l'
 find . -type f -iname "*.fastq.gz"  | parallel -j 2 'echo -n "{}: "; zcat "{}" | wc -l'
 ```
 
-For `xargs`, the `-P 2` tells it to use 4 cores for processing. Likewise for `paralel`, the `-j 2` tells it to use 4 cores for processing. However, carefully look at how the data gets printed to the screen for each execution. Notice how the `xargs` command prints the echo text right away before including the line count results.  Where as `parallel` has the data organized in the expected manner.
+For `xargs`, `-P 2` tells it to use 2 parallel processes. Likewise for `parallel`, `-j 2` tells it to use 2 parallel jobs. Carefully look at how data is printed to the screen for each execution. Notice how the `xargs` command can interleave text, whereas `parallel` keeps output grouped in a cleaner way.
 
 Now, let's say we want to run the same command, using half of our computer's resources. How would we do that for both `xargs` and `parallel`?
 
@@ -109,7 +120,7 @@ find . -type f -iname "*.fastq.gz"  | parallel -j 50% 'echo -n "{}: "; zcat "{}"
 For `xargs`, we have to use the `nproc` utility to get the total number of cores on our system, then divide that result by 2 to configure xargs to use 50% of our cores.
 For `parallel`, we simply have to configure it by changing the `-j` option to `-j 50%`. 
 
-However, notice that parallel keeps the echo filename: wc -l results paired, where as xargs does not. When you need to print the results of the command to screen, parallel handles this better. However, if you are running a data processing command with output files, either way of running the commands would work. Later in the workshop, we will write a BASH script to do a similar process. 
+However, notice that `parallel` keeps the `filename: wc -l` results paired, whereas `xargs` may not. When printing results directly to screen, `parallel` often handles output formatting better. If you are writing output files, either approach can work.
 
 Now, let's clean up the empty files. For any lines that have "gzip: ./set4/SRR5130826_1.fastq.gz: unexpected end of file", please delete these files, then rerun the wc -l commands to make sure the data has been cleaned up. Now that we have a list of files, we could manually run the `rm filename` command, but let's have find delete these files for us!
 
@@ -118,14 +129,14 @@ find . -type f -iname "*.fastq.gz" -size 0 -delete
 find . -type f -iname "*.fastq.gz"  | parallel -j 50% 'echo -n "{}: "; zcat "{}" | wc -l'
 ```
 
-#### Symbolic Links
+## 2. Symlinks and Hard Links
 
 Since copying or even moving large files (like sequence data) around your filesystem may be impractical, we can use links to reference ‘distant’ files without duplicating the data in the files. Symbolic links are disposable pointers that refer to other files, but behave like the referenced files in commands.
 
 !!! tip "Best Practice: Default to Symbolic Links"
     You should, by default, always use a symbolic (`-s`) link when working with sequence data.
 
-Hard links point to the location of the data on the hard drive while symbolic links point to a secondary location of the data on the hard drive (or the original file itself).
+Hard links point directly to file data on disk, while symbolic links point to a file path (the original file location).
 
 ![](https://ucdavis-bioinformatics-training.github.io/2019-Winter-Bioinformatics_Command_Line_and_R_Prerequisites_Workshop/CLI_Intro/hard_vs_symbolic.png)
 
@@ -157,7 +168,7 @@ lrwxrwxrwx 1 user rc-group   92 Mar 21 13:33 SRR5130755_1.fastq.gz -> /data/gpfs
 
 These linked files are not blinking red. This time the symlink points to an absolute path on the filesystem where the file is located. Now, we can treat these files as if they are present in the current directory.
 
-#### Disk usage analysis: du, df, and ncdu
+## 3. Disk Usage Analysis: du, df, and ncdu
 
 Monitoring disk usage is very important when processing data. Filesystems can quickly fill up when processing many samples. In order to monitor usage, UNIX provides two utilities: df and du.
 
@@ -197,3 +208,17 @@ The last utility is not installed by default on systems: `ncdu`.  Let's install 
 (base) [user@login-0 testdata1]$ mamba install ncdu
 (base) [user@login-0 testdata1]$ ncdu
 ```
+
+## Challenge: Batch QC on FASTQ Files
+
+Goal: Produce a one-line summary for each FASTQ file and save it to a report file.
+
+```bash
+find . -type f -iname "*.fastq.gz" | \
+parallel 'echo -n "{}\t"; zcat "{}" | wc -l' > fastq_line_counts.tsv
+```
+
+Then answer:
+
+* Which sample has the highest line count?
+* Are there suspiciously small files that may be truncated?

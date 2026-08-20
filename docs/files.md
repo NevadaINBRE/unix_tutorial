@@ -1,5 +1,14 @@
 # Working with Files
 
+## Learning Objectives
+
+By the end of this section, you should be able to:
+
+* Create, edit, copy, and remove files/directories
+* Use redirection safely (`>`, `>>`) when combining outputs
+* Search and summarize text with `grep` and `wc`
+* Understand basic Unix file permissions and executable bits
+
 Since we just re-logged into the server, you will be in your HOME directory. Change directories to your training folder.
 
 ```bash
@@ -54,6 +63,18 @@ We could make the same file in one command by using `cat` with multiple files an
 
 ```bash
 cat data.txt second.txt > fourth.txt
+```
+
+## Redirection Quick Reference
+
+* `>` overwrite output file
+* `>>` append to output file
+* `2>` write error output to file
+
+Example:
+
+```bash
+wc -l data.txt 1> line_count.txt 2> line_count.err
 ```
 
 ## 3. Word Count and Searching
@@ -122,6 +143,26 @@ rm -r -f extra/
 ls
 ```
 
+## File Permissions Basics (rwx, chmod)
+
+Use `ls -l` to inspect file permissions:
+
+```bash
+ls -l
+```
+
+You will see permission groups for user, group, and others:
+
+* `r` = read
+* `w` = write
+* `x` = execute
+
+To make a script executable later in the workshop:
+
+```bash
+chmod +x my_script.sh
+```
+
 ## 6. Piping and History
 
 You can view a history of all the commands ran during your terminal session. Type `history` to view.
@@ -139,3 +180,12 @@ Let's do this with `history` and `less` (a utility that allows paging through fi
 ```bash
 history | less
 ```
+
+## Day 1 Checkpoint 3
+
+Before continuing, verify you can:
+
+* Create and edit a file with `nano`.
+* Merge content from two files using redirection.
+* Find lines containing a keyword with `grep`.
+* Explain what `chmod +x` does.

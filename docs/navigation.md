@@ -1,5 +1,14 @@
 # Navigation and Pathing
 
+## Learning Objectives
+
+By the end of this section, you should be able to:
+
+* Use command-line options to inspect files and directories
+* Explain and apply relative versus absolute paths
+* Move through directories and reorganize files with confidence
+* Use wildcards to match multiple files quickly
+
 ## 1. Command Line Options & TAB Completion
 
 Notice the `ls` command lists the files. However, sometimes we want more information than just what is in a folder. For example, we may want to know file timestamps, file sizes, and user permissions.
@@ -25,7 +34,7 @@ ls .ssh
 Since the `.ssh` folder is in our home folder, we can use **TAB COMPLETION** to auto-complete the name. Test this by typing `ls .s` then press TAB and you will see the rest of the name auto-complete.
 
 !!! warning "Case Sensitivity"
-    Now try typing `ls .S` and press TAB. Did anything happen? No, this is because in unix files/folders/commands are **CASE SENSITIVE**.
+    Now try typing `ls .S` and press TAB. Did anything happen? No, this is because in Unix files/folders/commands are **CASE SENSITIVE**.
 
 ## 2. Relative vs Absolute Pathing
 
@@ -40,6 +49,14 @@ Let's use relative pathing to list the files above our home folder. In Unix, the
 ```bash
 ls -1 ..
 ```
+
+## Relative vs Absolute Paths: Quick Practice
+
+Try each of these and confirm with `pwd` after each step:
+
+1. Move into `training` using a relative path.
+2. Return to your home directory using an absolute path.
+3. List the parent directory using `ls -1 ..`.
 
 ## 3. Changing Directories and Working with Files
 
@@ -78,3 +95,38 @@ We can use the `tree` command to visualize the directory tree.
 ```bash
 tree
 ```
+
+## Wildcards and Globbing
+
+Wildcards let the shell match multiple files at once:
+
+* `*` matches zero or more characters
+* `?` matches exactly one character
+* `[abc]` matches a single character from a set
+
+Examples:
+
+```bash
+ls *.txt
+ls data?.txt
+ls data[0-9].txt
+```
+
+## Mini-Challenge: Organize a Project Folder
+
+Create this structure and verify it with `tree`:
+
+```bash
+mkdir -p project/data project/results project/scripts
+touch project/data/sample1.txt project/data/sample2.txt
+mv project/data/sample1.txt project/results/
+tree project
+```
+
+## Day 1 Checkpoint 2
+
+Before moving on:
+
+* You can explain `.` and `..`.
+* You can switch between relative and absolute paths.
+* You can move and rename files with `mv`.

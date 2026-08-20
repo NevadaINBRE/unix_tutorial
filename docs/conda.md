@@ -1,5 +1,14 @@
 # Software Installation (Conda)
 
+## Learning Objectives
+
+By the end of this section, you should be able to:
+
+* Explain why Conda is useful on shared systems
+* Install Conda in your home directory
+* Create, activate, and deactivate project environments
+* Install software into a specific environment and export it for reproducibility
+
 At the end of the previous section, we tried to run the `tree` command. Did you get the expected output? No? Well, that is because you do not have the `tree` command installed. 
 
 Since this is a shared computational resource and you do not have administrative rights to install new programs, we have to use a different program called `conda` which is able to install programs in your home directory so you can run them.
@@ -21,7 +30,7 @@ If you scroll towards the bottom, you can see a list of Linux, OSX, and Windows 
 We will use the `wget` utility, short for web get, to download this file to Pronghorn.
 
 ```bash
-wget [https://github.com/conda-forge/miniforge/releases/download/24.9.2-0/Mambaforge-24.9.2-0-Linux-x86_64.sh](https://github.com/conda-forge/miniforge/releases/download/24.9.2-0/Mambaforge-24.9.2-0-Linux-x86_64.sh)
+wget https://yourlinkhere
 ```
 
 Next, we will run this file with the program `bash` in order to install Conda.
@@ -44,15 +53,32 @@ source ~/.bashrc
 
 After reloading, test to see if Conda is working by using the `conda` command. If you do not receive a "command not found" error, you successfully installed Conda.
 
-
+## Verify Conda Installation
 
 ```bash
-exit
+conda --version
+conda info
 ```
 
-After relogging, test to see if Conda is working by using the `conda` command. If you do not receive a "command not found" error, you successfully installed Conda.
+If these commands run, your installation is working.
 
-## 3. Installing a Program with Conda
+## 3. Creating and Activating Environments
+
+Use named environments to isolate software for each project.
+
+```bash
+conda create -n unix_workshop python=3.11
+conda activate unix_workshop
+conda env list
+```
+
+When you are done working:
+
+```bash
+conda deactivate
+```
+
+## 4. Installing a Program with Conda
 
 Now that we have `conda` installed, let's install the `tree` command. This will install `tree` into your currently loaded environment, which the default is "base". 
 
@@ -66,7 +92,22 @@ conda install -c conda-forge tree htop
 * **`-c conda-forge`**: Tells Conda to look in the `conda-forge` "channel" (repository) for the software.
 * **`tree htop`**: The specific packages we want to install.
 
-## 4. Monitoring Running Jobs
+## 5. Exporting and Recreating Environments
+
+Capture exact versions to make your work reproducible.
+
+```bash
+conda activate unix_workshop
+conda env export > unix_workshop_env.yml
+```
+
+To recreate the same environment on another system:
+
+```bash
+conda env create -f unix_workshop_env.yml
+```
+
+## 6. Monitoring Running Jobs
 
 The `top` command prints a self-updating table of running processes and system stats. Use `q` to exit top, `z` to toggle better color contrast, `M` to sort by memory use, `P` to sort by processor use, and `c` to toggle display of the full commands. Hit `1` to toggle display of all processors, and hit `u` followed by typing in a username in order to only show processes (jobs) owned by that user.
 
@@ -75,3 +116,11 @@ Since we just installed it, let's also compare the new `htop` command to the sys
 
 !!! info "HPC Job Schedulers"
     While `htop` is an excellent tool for monitoring interactive sessions, keep in mind that you generally won't run resource-heavy bioinformatics tools directly on the login node. For heavy computational lifting, you will eventually package these commands into scripts and submit them to a cluster using job schedulers like SLURM or PBS.
+
+## Troubleshooting: Conda Not Found
+
+If `conda` is still not available after install:
+
+* Run `source ~/.bashrc` again.
+* Open a new terminal session and re-test with `conda --version`.
+* Confirm installation files exist in your home directory.

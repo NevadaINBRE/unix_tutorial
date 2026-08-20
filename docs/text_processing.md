@@ -2,16 +2,45 @@
 
 In this section we will be learning about: `grep`, `sed`, and `awk`.  
 
-For this section, we will be using a Tab Seperated Value file (TSV) of genomic annotation data for the Sars CoV2 genome. Please download it into the testdata1 folder and extract it with the following commands.
+## Learning Objectives
+
+By the end of this section, you should be able to:
+
+* Use regular expressions for targeted pattern matching
+* Extract matching lines with `grep`
+* Replace text safely with `sed`
+* Filter and compute columnar data with `awk`
+
+## Regex Fundamentals for grep
+
+Before jumping into advanced `grep` patterns, here are the most useful regex pieces:
+
+* `.` any single character
+* `*` zero or more of the previous token
+* `+` one or more of the previous token
+* `[abc]` any one character from a set
+* `[0-9]` any single digit
+* `^` start of line anchor
+* `$` end of line anchor
+
+Examples:
+
+```bash
+grep "^Chromosome" file.gff3
+grep "dna[JK]" file.gff3
+grep "_[0-9]" file.gff3
+```
+
+For this section, we will be using a Tab-Separated Value file (TSV) of genomic annotation data for the SARS-CoV-2 genome. Please download it into the testdata1 folder and extract it with the following commands.
 
 ```bash
 (base) [user@login-0 testdata1]$ wget [https://ftp.ensemblgenomes.ebi.ac.uk/pub/bacteria/release-60/gff3/bacteria_26_collection/escherichia_coli_w_gca_000184185/Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3.gz](https://ftp.ensemblgenomes.ebi.ac.uk/pub/bacteria/release-60/gff3/bacteria_26_collection/escherichia_coli_w_gca_000184185/Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3.gz)
 (base) [user@login-0 testdata1]$ gunzip Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3.gz 
 ```
 
-#### grep: Extracting patterns from files
+## grep: Extracting patterns from files
 
-`grep` is a keyword or pattern search for text files in linux. Let's say we want to find a particular keyword in a large text file, in this case "dnaJ". We can search it with grep.
+`grep` is a keyword or pattern search utility for text files in Linux. Let's say we want to find a particular keyword in a large text file, in this case "dnaJ". We can search it with grep.
 
 ```bash
 (base) [user@login-0 testdata1]$ grep "dnaJ" Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3 
@@ -45,9 +74,9 @@ If you aren't familiar with REGEX, a cheat sheet is included below.
 
 ![](https://coderpad.io/wp-content/uploads/2022/04/Regex-Cheat-Sheet-599x1024.png)
 
-#### sed: Stream editing for find-and-replace operations
+## sed: Stream editing for find-and-replace operations
 
-`sed` is a powerful find/replace tool for unix. The syntax of the command is `s/SEARCHTERM/REPLACEMENTTERM/g`. 
+`sed` is a powerful find/replace tool for Unix. The syntax of the command is `s/SEARCHTERM/REPLACEMENTTERM/g`.
 
 In our example file, let's replace "Chromosome" with "Chr1".
 
@@ -61,7 +90,7 @@ Notice, the text gets printed to the screen. We would need to use command line r
 (base) [user@login-0 testdata1]$ sed -i 's/Chromosome/Chr1/g' Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3  
 ```
 
-#### awk: Powerful text processing and column extraction
+## awk: Powerful text processing and column extraction
 
 `awk` is a powerful text-processing utility in Unix/Linux, used for pattern scanning, processing, and reporting. It is particularly useful for working with structured data, like CSV files, logs, and text files where data is organized into fields (often delimited by spaces, tabs, or other characters).
 
@@ -97,7 +126,7 @@ Notice, in the output, there are some lines that have blank values, but the stat
 (base) [user@login-0 testdata1]$ awk '$3 == "gene" {print "Category: "$3", Start: "$4", End: "$5}' Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3
 ```
 
-Lets add a computed value for length which would be end value - start value.
+Let's add a computed value for length, which is end value minus start value.
 
 ```bash
 (base) [user@login-0 testdata1]$ awk '$3 == "gene" {print "Category: "$3", Start: "$4", End: "$5", Length: "$5-$4}' Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3
@@ -109,8 +138,23 @@ Now, let's say we want to only inspect elements with a length over 1000.
 (base) [user@login-0 testdata1]$ awk '$3 == "gene" && $5-$4 > 1000 {print "Category: "$3", Start: "$4", End: "$5", Length: "$5-$4}' Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3
 ```
 
-Lastly, lets add a counter to find out the number of records that pass these filtering criteria.
+Lastly, let's add a counter to find out the number of records that pass these filtering criteria.
 
 ```bash
 (base) [user@login-0 testdata1]$ awk '$3 == "gene" && $5-$4 > 1000 {print "Category: "$3", Start: "$4", End: "$5", Length: "$5-$4; count++ } END { print "Total records matching criteria:", count }' Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3
+```
+
+## Challenge: Filter and Summarize Genes
+
+Using the same GFF3 file, complete the following tasks:
+
+1. Count genes with length greater than 500.
+2. Print only the start and end coordinates for those genes.
+3. Save the output to `long_genes.tsv`.
+
+One possible solution:
+
+```bash
+awk '$3 == "gene" && $5-$4 > 500 {print $4"\t"$5}' Escherichia_coli_w_gca_000184185.ASM18418v1.60.gff3 > long_genes.tsv
+wc -l long_genes.tsv
 ```

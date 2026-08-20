@@ -48,6 +48,28 @@ DESCRIPTION
 
 This will conclude our workshop. 
 
+### Day 2 Readiness Checklist
+
+Before you leave, verify you can do each of these tasks:
+
+* Find all FASTQ files recursively in a directory tree.
+* Run a one-line command across many files with `parallel`.
+* Extract and count matching records with `grep` or `awk`.
+* Run a shell script executable from your `$PATH`.
+* Explain when to use `nohup` versus a scheduler submission.
+
+### Command Reference (Day 2)
+
+* `find . -type f -iname "*.fastq.gz"`
+* `parallel 'command {}'`
+* `grep -e "pattern" file`
+* `sed -i 's/old/new/g' file`
+* `awk 'pattern { action }' file`
+* `chmod +x script.sh`
+* `ssh user@host`
+* `rsync -av source/ dest/`
+* `sbatch job.sh`
+
 ### Cheat Sheets
 
 Below is a BASH commands cheat sheet.

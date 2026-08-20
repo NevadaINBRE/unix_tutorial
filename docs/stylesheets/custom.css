@@ -14,3 +14,32 @@
   color: #0056b3;
   text-decoration: underline;
 }
+
+/* Accessibility: visible keyboard focus */
+.md-typeset a:focus,
+.md-typeset button:focus,
+.md-typeset input:focus,
+.md-typeset textarea:focus,
+.md-typeset select:focus {
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
+}
+
+/* Print-friendly workshop pages */
+@media print {
+  .md-header,
+  .md-sidebar,
+  .md-footer {
+    display: none !important;
+  }
+
+  .md-content {
+    margin: 0;
+    padding: 0;
+  }
+
+  .md-typeset pre,
+  .md-typeset code {
+    page-break-inside: avoid;
+  }
+}

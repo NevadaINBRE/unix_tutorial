@@ -1,5 +1,15 @@
 # Remote Computing & File Transfers 
 
+## Learning Objectives
+
+By the end of this section, you should be able to:
+
+* Connect to remote systems with SSH
+* Configure key-based SSH authentication
+* Transfer files efficiently with `rsync`
+* Run long jobs safely using background tools and schedulers
+* Understand the core fields in a SLURM submission script
+
 #### Secure remote access with ssh
 
 One of the reasons researchers use Linux is because it is easy to allow users to remotely connect to a server in a secure manner, using `ssh`. Below is how you would connect using a *Linux* or *Mac OSX* computer using a TERMINAL program. Both of these operating systems should have a terminal installed by default.
@@ -85,7 +95,7 @@ Additionally, you can have a list of file types you want it to exclude.
 rsync -av --exclude "*.log" --exclude "tmp/" /home/user/docs/ user@remote_server:/backup/docs/
 ```
 
-If you are limited by bandwith, you can speed up the transfer by using the `-z` option to compress the data during transfer.
+If you are limited by bandwidth, you can speed up the transfer by using the `-z` option to compress the data during transfer.
 
 ```bash
 rsync -avz --exclude "*.log" --exclude "tmp/" /home/user/docs/ user@remote_server:/backup/docs/
@@ -180,6 +190,18 @@ Here is what our `filelist_linecounter.sh` script might look like wrapped in a b
 !!! tip "Batch vs. Interactive"
     You submit the script above using `sbatch myscript.sh` (or `qsub` for PBS). The scheduler will run it in the background as soon as resources are available, completely replacing the need for `nohup`.
 
+#### SLURM Script Anatomy
+
+Common directives in the example script:
+
+* `--job-name`: label shown in scheduler queues
+* `--cpus-per-task`: CPU cores requested for one task
+* `--mem`: memory requested (for example, `8G`)
+* `--time`: walltime limit in `HH:MM:SS`
+* `--output` and `--error`: log files for STDOUT and STDERR
+
+Use realistic values. Over-requesting resources can delay queue start time.
+
 #### Using screen command
 
 This section will show you how to configure and use screen.
@@ -200,11 +222,11 @@ Now that we have the configuration file, let's start a session:
 (base) [user@login-0 testdata1]$  screen
 ```
 
-Now that you are running screen, you will see the bottom portion of your terminal has some new text. In green towards the bottom left of your screen, you have the hostname of the computer you are on. Next to this you have your virutal windows numbered from 0 to N. By default right after you run screen, you will have 1 named window as `(0*$bash)`.
+Now that you are running screen, you will see the bottom portion of your terminal has some new text. In green towards the bottom left of your screen, you have the hostname of the computer you are on. Next to this you have your virtual windows numbered from 0 to N. By default right after you run screen, you will have 1 named window as `(0*$bash)`.
 
 Let's create a new screen window by pressing the `CTRL+A` keys together. These two keys together tells the server that the next key that is pressed will be a screen command. 
 
-Press the "c" key after you press `CTRL+A` keys.  This will Create a new window labeled `(1*$bash)`. You can then switch between these virtual windows by pressing the `CTRL+A` keys together then typing the number of the window you want to view. 
+Press the "c" key after you press `CTRL+A` keys. This will create a new window labeled `(1*$bash)`. You can then switch between these virtual windows by pressing the `CTRL+A` keys together then typing the number of the window you want to view.
 
 When you are finished working, you can close your terminal to end your session. Then, the next day you want to work on the project you can SSH to Pronghorn and then issue the `screen -x` command to restore your previous screen session. Pretty Nifty!
 
@@ -214,3 +236,10 @@ When you are finished working, you can close your terminal to end your session. 
 ### Screen Cheat Sheet
 
 ![GNU Screen Cheat Sheet](images/screen_cheatsheet.png)
+
+## Troubleshooting: SSH, rsync, and Scheduler Errors
+
+* **SSH hangs or times out**: run `ssh -v user@host` to inspect connection details.
+* **Permission denied (publickey)**: verify key is in `~/.ssh/authorized_keys` and permissions are strict (`chmod 700 ~/.ssh`, `chmod 600 ~/.ssh/authorized_keys`).
+* **`rsync` copied unexpected folder nesting**: re-check trailing slash behavior on source path.
+* **SLURM job pending too long**: inspect queue and requested resources with `squeue -u $USER`.

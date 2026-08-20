@@ -1,5 +1,14 @@
 # Shell Scripting for Automation
 
+## Learning Objectives
+
+By the end of this section, you should be able to:
+
+* Build and run a basic Bash script with a shebang
+* Pass arguments into a script and validate inputs
+* Use quoting and variables safely
+* Capture output and errors separately for debugging
+
 In this section, we will be writing our first BASH script using a similar method we explored in the first section today.
 
 First, in order to write this script, we need to have a list of files we want to process. We can use find again to create this list then start editing our first BASH script.
@@ -12,7 +21,7 @@ First, in order to write this script, we need to have a list of files we want to
 Include the following text in the script, then save. We will discuss the meaning of each line. In this BASH script, we use variables (INFILE) and a for loop to process this data.
 
 ```bash
-#!/bin/env bash
+#!/usr/bin/env bash
 
 INFILE=files.txt
 IFS=$'\n' # set the Internal Field Separator to newline
@@ -24,6 +33,21 @@ do
 done
 ```
 
+## Variables, Quoting, and Safer Loops
+
+When working with filenames, always use quotes around variables. This prevents breakage when paths contain spaces or special characters.
+
+Safer pattern for reading a list of files:
+
+```bash
+while IFS= read -r file; do
+    wc=$(zcat "$file" | wc -l)
+    echo "$file: $wc"
+done < "$INFILE"
+```
+
+This avoids command substitution on entire file lists and handles edge cases more reliably.
+
 To run this BASH script, execute it with:
 
 ```bash
@@ -33,7 +57,7 @@ bash filelist_linecounter.sh
 Our script worked! Now, let's modify it to allow for any filename, rather than a files.txt name specifically.
 
 ```bash
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # Ensure a file list is provided
 if [ "$#" -ne 1 ]; then
@@ -73,7 +97,7 @@ Now look for a line that contains `export PATH=.....` and make sure it lists you
 export PATH="/data/gpfs/home/user/bin:$PATH"
 ```
 
-Now, you should be able to run that script from any directory, not just the directory where we moved the script.  Notice, the `bash` command isn't used in running the script. This is because the first line (shbang line) tells the script which interpereter to use to run it.
+Now, you should be able to run that script from any directory, not just the directory where we moved the script. Notice the `bash` command is not used when running the script directly. This works because the first line (shebang line) tells the script which interpreter to use.
 
 ```bash
 (base) [user@login-0 testdata1]$ filelist_linecounter.sh files.txt 
@@ -109,7 +133,7 @@ Contains the character count of the file.
 ```
 Empty since no errors occurred.
 
-Lets rerun again, this time with the filename mispelled.
+Let's rerun again, this time with the filename misspelled.
 
 ```bash
 (base) [user@login-0 testdata1]$ wc -c Escherichia_coli_w_gca_000184185.ASM18418v1.60.g 1> chars.txt 2> any.err
